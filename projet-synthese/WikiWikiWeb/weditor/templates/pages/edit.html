@@ -1,0 +1,150 @@
+{% extends 'layout/main.html' %}
+
+{% block head_extras %}
+<script src="{{ STATIC_URL }}js/ckeditor/ckeditor.js"></script>
+<script src="{{ STATIC_URL }}js/ckeditor-config.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // initialize CKEditor
+        CKEDITOR.replace('id_text', article_config);
+        {% for version in history %}
+        CKEDITOR.replace('version-text-{{ version.id }}', version_config);
+        {% endfor %}
+
+        {% if last_wiki_version %}
+        CKEDITOR.replace('wiki-version-text', version_config);
+        {% endif %}
+
+        // go at the bottom of the page
+        $("#goto-history").click(function (e) {
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+        });
+
+        // switch between history versions
+        $('.see-version').click(function (e) {
+            var version_id = $(this).attr('data-idref');
+            $('.version-container').hide('slow');
+            $('#version-container-' + version_id).show('slow');
+            $('.version-list tr').removeClass('selected');
+            $(this).parent().parent().addClass('selected');
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="content" class="align_center">
+    <h3>Édition de l'article: {{ article.title }}{% if last_wiki_version %} <span class="red">(conflit)</span>{% endif %}</h3>
+
+    {% if messages %}
+     {% for message in messages %}
+    <br />
+    <p class="message-line {{ message.tags }} important">
+        {{ message }}
+    </p>
+    <br />
+    {% endfor %}
+    {% endif %}
+
+    <br />
+
+    {% if last_wiki_version %}
+    <p class="important">
+        Pour résoudre le conflit, vous pouvez modifier votre travail et l'enregistrer ou perdre votre travail en récupérant la version Wiki.
+    </p>
+
+    <br />
+
+    <h4 class="orange">Version du Wiki</h4>
+    <div id="wiki-version-container"">
+        <textarea id="wiki-version-text">
+            {{ last_wiki_version }}
+        </textarea>
+    </div>
+    <br />
+    {% endif %}
+
+    <div class="right">
+        Pour voir l'historique, <a href="#" id="goto-history">cliquez ici</a>
+    </div>
+
+    <br />
+
+    <form action="{% url 'edit' article.id %}" method="post" id="edit_form">
+        {% csrf_token %}
+
+        <div>
+            {{ edit_form.text }}
+            {{ edit_form.text.errors }}
+        </div>
+
+        <br />
+
+        <div class="ui-grid-b">
+            <div class="ui-block-a align_left">
+                {% if article.state == article.DRAFT or article.state == article.CONFLICT %}
+                <input type="submit" name="refresh" value="Récupérer la dernière version" data-icon="update" data-iconpos="top" data-mini="true" data-inline="true" onclick="javascript:return confirm('Cette action va remplacer cette version par la dernière version du Wiki (vos modifications seront perdues).\nÊtes vous sûr ?');" />
+                {% endif %}
+            </div>
+            <div class="ui-block-b align_center">
+                <input type="submit" name="save" value="Enregistrer mes modifications" data-mini="true" data-iconpos="top" data-icon="check" data-inline="true" />
+            </div>
+            <div class="ui-block-c align_right">
+                {% if article.state == article.DRAFT or article.state == article.NEW %}
+                <input type="submit" name="publish" value="Publier l'article sur le Wiki" data-icon="publish" data-iconpos="top" data-mini="true" data-inline="true" onclick="javascript:return confirm('Avant d\'envoyer votre article, pensez à enregistrer vos modifications.\nContinuer ?');"/>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+
+    <div class="clear"></div>
+    <br /><hr /><br />
+
+    <div class="history">
+        <h4>Historique de vos modifications</h4>
+
+        <br />
+
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <table class="version-list">
+                {% for version in history %}
+                    <tr>
+                        <td class="version-id important">
+                            #{{ version.counter }}
+                        </td>
+                        <td class="infos">
+                            {{ version.get_origin_display }} du {{ version.date_created }}
+                        </td>
+                        <td class="actions">
+                            <a href="#" class="see-version" data-idref="{{ version.id }}" data-role="button" data-icon="see" data-iconpos="notext" data-mini="true" data-inline="true" title="Voir le texte"></a>
+                            <a href="{% url 'review' article.id version.id %}" class="reload-version" data-idref="{{ version.id }}" data-role="button" data-icon="refresh" data-iconpos="notext" data-mini="true" data-inline="true" title="Retourner à la version de cette article" onclick="javascript:return confirm('Cette action va créer une nouvelle version basée celle que vous voulez recharger.\nÊtes-vous sûr de vouloir continuer ?');"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+
+            <div class="ui-block-b">
+                {% for version in history %}
+                <div class="version-container" id="version-container-{{ version.id }}">
+                    <textarea class="version-text" id="version-text-{{ version.id }}">
+                        {{ version.text }}
+                    </textarea>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="clear"></div><br />
+
+        <p class="note" id="history-goto">
+            Pour modifier le nombre de version que vous voulez conserver, rendez-vous sur <a href="{% url 'settings' %}">la page de configuration</a>
+        </p>
+    </div>
+
+    <div class="clear"></div>
+</div>
+{% endblock %}

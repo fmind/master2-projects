@@ -1,0 +1,44 @@
+{% extends 'layout/main.html' %}
+
+{% block content %}
+<div id="content" class="align_center">
+    <h3>Résultats de la recherche pour: {{ query.q }} ({{ query.wiki.display_name }})</h3>
+    <br />
+
+    {% if messages %}
+     {% for message in messages %}
+        <p class="message-line {{ message.tags }} important">
+            {{ message }}
+        </p>
+    {% endfor %}
+    {% else %}
+        <p class="important dark-green">
+            Cliquez sur le titre de l'article pour l'ajouter à votre interface.
+        </p>
+    {% endif %}
+
+    <br />
+
+    <table class="searchlist align_left center">
+    {% for res in query.results %}
+        <tr>
+            <td class="important">
+                {{ res.title }}
+            </td>
+            <td>
+                {{ res.description }}
+            </td>
+            <td class="actions">
+                <a href="{% url 'link' forloop.counter0  %}" data-role="button" data-icon="add" data-iconpos="notext" data-mini="true" data-inline="true" title="Ajouter à mon interface"></a>
+                <a href="{{ res.url }}" target="_blank" data-role="button" data-icon="see" data-iconpos="notext" data-mini="true" data-inline="true" title="Voir l'article sur le wiki"></a>
+            </td>
+        </tr>
+    {% empty %}
+        <br />
+        <p class="purple important">
+            &gt;&gt;&nbsp;&nbsp; La recherche n'a renvoyé aucun résultat :( &nbsp;&nbsp;&lt;&lt;
+        <p>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

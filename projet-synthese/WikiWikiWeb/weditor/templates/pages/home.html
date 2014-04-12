@@ -1,0 +1,111 @@
+{% extends 'layout/main.html' %}
+{% load weditor_extras %}
+
+{% block content %}
+<div id="content" class="align_center">
+    <h3>Articles suivis</h3>
+    <br />
+    {% if can_create_article %}
+    <form action="{% url 'search' %}" method="get" id="search_form">
+        <label for="q_search" class="ui-hidden-accessible">Texte</label>
+        <input type="search" name="q" id="q_search" data-inline="true" placeholder="Tapez le nom d'un article pour l'ajouter à la liste" data-mini="true" />
+
+        <label for="wiki_search" class="ui-hidden-accessible">Wiki</label>
+        <select name="wiki" id="wiki_search" data-inline="true" data-mini="true">
+        {% for wiki in wikis %}
+            {% if wiki.id == request.user.settings.default_wiki.id %}
+                <option value="{{ wiki.id }}" selected="selected">{{ wiki.display_name }}</option>
+            {% else %}
+                <option value="{{ wiki.id }}">{{ wiki.display_name }}</option>
+            {% endif %}
+        {% endfor %}
+        </select>
+
+        <input type="submit" value="Recherche" id="submit_search" data-inline="true" data-mini="true" title="Laissez vide pour relancer vos derniers résultats" />
+    </form>
+    <br /><br /><br />
+    {% endif %}
+
+    {% if messages %}
+     {% for message in messages %}
+        <p class="message-line {{ message.tags }} important">
+            {{ message }}
+        </p>
+        <br />
+    {% endfor %}
+    {% endif %}
+
+    <table id="article_table" class="csstable">
+        <thead>
+            <tr>
+                <th class="article_title">Nom de l'article</th>
+                <th class="last_updated">Dernière récupération</th>
+                <th class="last_modified">Dernière modification</th>
+                <th class="last_published">Dernière publication</th>
+                <th class="wiki_name">Wiki</th>
+                <th class="state">État</th>
+                <th class="actions"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+            <tr>
+                <td class="article_title">
+                    <a href="{% url 'edit' article.id %}">{{ article.title }}</a>
+                </td>
+                <td class="last_updated">{{ article.date_refreshed|date:"DATE_FORMAT" }}</td>
+                <td class="last_modified">{{ article.date_updated|date:"DATE_FORMAT" }}</td>
+                <td class="date_published">{{ article.date_published|date:"DATE_FORMAT" }}</td>
+                <td class="wiki_name">{{ article.wiki.display_name }}</td>
+                {% if article.state == article.OK %}
+                <td class="state align_right green important">
+                    Synchronisé :)
+                    <a href="{% url 'edit' article.id %}" data-role="button" data-icon="info" data-iconpos="notext" data-mini="true" data-inline="true" style="cursor:help;" title="Vous disposez de la dernière version de l'article, prête à être modifiée !"></a>
+                </td>
+                {% endif %}
+                {% if article.state == article.DRAFT %}
+                <td class="state align_right orange important">
+                    Brouillon ...
+                    <a href="{% url 'edit' article.id %}" data-role="button" data-icon="info" data-iconpos="notext" data-mini="true" data-inline="true" style="cursor:help;" title="Vous avez effectué des changements sur l'article. Pour qu'elles soient visibles sur le Wiki, vous devez les publier."></a>
+                </td>
+                {% endif %}
+                {% if article.state == article.NEW %}
+                <td class="state align_right purple important">
+                    Nouveau ...
+                    <a href="{% url 'edit' article.id %}" data-role="button" data-icon="info" data-iconpos="notext" data-mini="true" data-inline="true" style="cursor:help;" title="Cet article n'est présent que sur votre interface. Vous devez le publier pour qu'il apparaisse sur le Wiki"></a>
+                </td>
+                {% endif %}
+                {% if article.state == article.CONFLICT %}
+                <td class="state align_right red important">
+                    Conflit !!!
+                    <a href="{% url 'edit' article.id %}" data-role="button" data-icon="info" data-iconpos="notext" data-mini="true" data-inline="true" style="cursor:help;" title="Un autre utilisateur a publié une nouvelle version avant que vous ne puissiez envoyer la votre. Vous devez résoudre le conflit avant de pouvoir les synchroniser."></a>
+                </td>
+                {% endif %}
+                <td class="actions">
+                    {% if article.url %}
+                    <a href="{% see_url article.url %}" target="_blank" data-role="button" data-icon="see" data-iconpos="notext" data-mini="true" data-inline="true" title="Voir l'article sur le wiki"></a>
+                    {% endif %}
+                    <a href="{% url 'edit' article.id %}" data-role="button" data-icon="edit" data-iconpos="notext" data-mini="true" data-inline="true" title="Éditer l'article"></a>
+                    <a href="{% url 'delete' article.id %}" onclick="javascript:return confirm('Voulez vous supprimer l\'article de l\'interface ? \nNotez que cette action n\'entrainera PAS la suppression de l\'article sur le wiki');" data-role="button" data-icon="delete" data-iconpos="notext" data-mini="true" data-inline="true" title="Arrêter de suivre l'article"></a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if can_create_article %}
+            <tr>
+                <td colspan="7">
+                    <a href="{% url 'create' %}" data-role="button" data-icon="plus" data-iconpos="right">
+                        Créer un nouvel article
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" class="important">
+                    Vous ne pouvez pas gérer plus de {{ limit_create }} articles sur WikiWikiWeb.
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

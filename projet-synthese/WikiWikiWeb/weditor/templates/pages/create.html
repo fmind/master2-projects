@@ -1,0 +1,63 @@
+{% extends 'layout/main.html' %}
+
+{% block head_extras %}
+<script src="{{ STATIC_URL }}js/ckeditor/ckeditor.js"></script>
+<script src="{{ STATIC_URL }}js/ckeditor-config.js"></script>
+
+<script>
+    $(document).ready(function() {
+        CKEDITOR.replace('id_text', article_config);
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="content" class="align_center">
+    <h3>Création d'un nouvel article</h3>
+    <br />
+
+    {% if messages %}
+    {% for message in messages %}
+    <br />
+    <p class="message-line {{ message.tags }} important">
+        {{ message }}
+    </p>
+    <br />
+    {% endfor %}
+    {% endif %}
+
+    <form action="{% url 'create' %}" method="post" id="create_form">
+        {% csrf_token %}
+
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <label for="id_title">{{ create_form.title.label }}:</label>
+                {{ create_form.title }}
+                {{ create_form.title.errors }}
+            </div>
+
+
+            <div class="ui-block-b">
+                <label for="id_wiki">{{ create_form.wiki.label }}:</label>
+                {{ create_form.wiki }}
+                {{ create_form.wiki.errors }}
+            </div>
+        </div>
+
+        <br />
+
+        <div>
+            {{ create_form.text }}
+            {{ create_form.text.errors }}
+        </div>
+
+        <br />
+
+        <div>
+            <input type="submit" value="Enregistrer mes modifications" data-mini="true" data-iconpos="top" data-icon="check" data-inline="true" />
+        </div>
+    </form>
+
+    <div class="clear"></div>
+</div>
+{% endblock %}

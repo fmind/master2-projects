@@ -1,0 +1,47 @@
+{% extends 'layout/main.html' %}
+
+{% block content %}
+<div id="content" class="align_center">
+    {% if messages %}
+        {% for message in messages %}
+        <p class="dark-green important big">
+            {{ message }}
+        </p>
+
+        <br />
+
+        <div class="ui-grid-a">
+            <a href="{% url 'home' %}" class="ui-block-a" data-role="button" data-icon="home" data-iconpos="top">Retour à la page d'accueil</a>
+            <a href="{% url 'settings' %}" class="ui-block-b" data-role="button" data-icon="gear" data-iconpos="top">Modifier de nouveau mes préférences</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h3>Gestion de mes préférences</h3>
+        <br />
+
+        <form action="{% url 'settings' %}" method="post" id="profile_form" class="center limit">
+            {% csrf_token %}
+
+            {{ settings_form }}
+
+            <div>
+                <label for="id_new_password1">{{ settings_form.new_password1.label }}:</label>
+                {{ settings_form.new_password1 }}
+                {{ settings_form.new_password1.errors }}
+            </div>
+
+            {% if settings_form.non_field_errors %}
+                <br />
+                {{ settings_form.non_field_errors }}
+                <br />
+            {% else %}
+                <br /><br />
+            {% endif %}
+
+            <br />
+
+            <input type="submit" value="Mettre à jour mes préférences" />
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

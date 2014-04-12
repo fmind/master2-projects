@@ -1,0 +1,60 @@
+{% extends 'layout/main.html' %}
+
+{% block identity %}{% endblock %}
+
+{% block content %}
+<div id="content" class="align_center">
+    <h3 class="big dark-green">Connectez-vous à WikiWikiWeb !</h3>
+
+    <br />
+
+    <form action="{% url 'login' %}" id="login_form" method="post" class="limit center">
+        {% csrf_token %}
+
+        <div>
+            <label for="id_username">{{ auth_form.username.label }}:</label>
+            {{ auth_form.username }}
+            {{ auth_form.username.errors }}
+        </div>
+
+        <br />
+
+        <div>
+            <label for="id_password">{{ auth_form.password.label }}:</label>
+            {{ auth_form.password }}
+            {{ auth_form.password.errors }}
+        </div>
+
+        {% if auth_form.captcha %}
+            <br />
+
+            <div>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <label for="id_captcha" class="important">Êtes vous un humain ?</label>
+                        <br /><br />
+                        Pour le vérifiez,
+                        <br />
+                        saisissez le mot suivant:
+                    </div>
+                    <div class="ui-block-b">
+                        {{ auth_form.captcha }}
+                    </div>
+                    {{ auth_form.captcha.errors }}
+                    {{ auth_form.captcha.help_text }}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if auth_form.non_field_errors %}
+            <br />
+            {{ auth_form.non_field_errors }}
+            <br />
+        {% else %}
+            <br /><br />
+        {% endif %}
+
+        <input type="submit" name="submit" value="Me Connecter" />
+    </form>
+</div>
+{% endblock %}

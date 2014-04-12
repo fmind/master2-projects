@@ -1,0 +1,189 @@
+// converted by version 1.1
+// on Wed Nov 06 16:19:03 CET 2013
+
+.package sm/applets {
+	.aid 0xEE:0x0:0x0:0x0:0x0:0xBB:0x1;
+	.version 1.0;
+
+	.imports {
+		0xA0:0x0:0x0:0x0:0x62:0x1:0x1 1.0;		//javacard/framework
+	}
+
+	.applet {
+		0xEE:0x0:0x0:0x0:0x0:0xBB:0x2 EchoApplet;
+	}
+
+	.constantPool {
+		// 0
+		instanceFieldRef byte[] EchoApplet/RESP_10;
+		// 1
+		instanceFieldRef byte[] EchoApplet/RESP_20;
+		// 2
+		staticMethodRef 0.3.0()V;		// javacard/framework/Applet.<init>()V
+		// 3
+		virtualMethodRef 0.3.1()V;		// javacard/framework/Applet.register()V
+		// 4
+		classRef EchoApplet;
+		// 5
+		staticMethodRef EchoApplet/<init>()V;
+		// 6
+		virtualMethodRef 0.10.1()[B;		// javacard/framework/APDU.getBuffer()[B
+		// 7
+		virtualMethodRef EchoApplet/sendResponse(Ljavacard/framework/APDU;[B)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 8
+		staticMethodRef 0.7.1(S)V;		// javacard/framework/ISOException.throwIt(S)V
+		// 9
+		staticMethodRef 0.16.1([BS[BSS)S;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+		// 10
+		virtualMethodRef 0.10.7()S;		// javacard/framework/APDU.setOutgoing()S
+		// 11
+		virtualMethodRef 0.10.9(S)V;		// javacard/framework/APDU.setOutgoingLength(S)V
+		// 12
+		virtualMethodRef 0.10.4(SS)V;		// javacard/framework/APDU.sendBytes(SS)V
+	}
+
+	.class public EchoApplet 0 extends 0.3 {		// extends javacard/framework/Applet
+
+		.fields {
+			private byte[] RESP_10 0;		// [B
+			private byte[] RESP_20 1;		// [B
+			public static final byte MY_CLA = -112;		// B
+			public static final byte INS_10 = 16;		// B
+			public static final byte INS_20 = 32;		// B
+		}
+
+		.publicMethodTable 7 {
+			equals(Ljava/lang/Object;)Z;
+			register()V;
+			register([BSB)V;
+			selectingApplet()Z;
+			deselect()V;
+			getShareableInterfaceObject(Ljavacard/framework/AID;B)Ljavacard/framework/Shareable;;
+			select()Z;
+			process(Ljavacard/framework/APDU;)V;
+			sendResponse(Ljavacard/framework/APDU;[B)V;
+		}
+
+		.packageMethodTable 0 {
+		}
+
+		.method private <init>()V {
+			.stack 5;
+			.locals 0;
+
+				L0:	aload_0;
+					invokespecial 2;		// javacard/framework/Applet.<init>()V
+					aload_0;
+					sconst_3;
+					newarray 11;
+					dup;
+					sconst_0;
+					bspush -86;
+					bastore;
+					dup;
+					sconst_1;
+					bspush -69;
+					bastore;
+					dup;
+					sconst_2;
+					bspush -52;
+					bastore;
+					putfield_a 0;		// reference sm/applets/EchoApplet.RESP_10
+					aload_0;
+					sconst_3;
+					newarray 11;
+					dup;
+					sconst_0;
+					bspush -35;
+					bastore;
+					dup;
+					sconst_1;
+					bspush -18;
+					bastore;
+					dup;
+					sconst_2;
+					sconst_m1;
+					bastore;
+					putfield_a 1;		// reference sm/applets/EchoApplet.RESP_20
+					aload_0;
+					invokevirtual 3;		// javacard/framework/Applet.register()V
+					return;
+		}
+
+		.method public static install([BSB)V 0 {
+			.stack 1;
+			.locals 0;
+
+				L0:	new 4;		// sm/applets/EchoApplet
+					invokespecial 5;		// sm/applets/EchoApplet.<init>()V
+					return;
+		}
+
+		.method public process(Ljavacard/framework/APDU;)V 7 {
+			.stack 3;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 6;		// javacard/framework/APDU.getBuffer()[B
+					astore_2;
+					aload_2;
+					sconst_0;
+					baload;
+					bspush -112;
+					if_scmpne L5;
+				L1:	aload_2;
+					sconst_1;
+					baload;
+					slookupswitch L4 2 16 L2 32 L3;
+				L2:	aload_0;
+					aload_1;
+					getfield_a_this 0;		// reference sm/applets/EchoApplet.RESP_10
+					invokevirtual 7;		// sm/applets/EchoApplet.sendResponse(Ljavacard/framework/APDU;[B)V
+					goto L5;
+				L3:	aload_0;
+					aload_1;
+					getfield_a_this 1;		// reference sm/applets/EchoApplet.RESP_20
+					invokevirtual 7;		// sm/applets/EchoApplet.sendResponse(Ljavacard/framework/APDU;[B)V
+					goto L5;
+				L4:	sspush 27904;
+					invokestatic 8;		// javacard/framework/ISOException.throwIt(S)V
+				L5:	return;
+		}
+
+		.method protected sendResponse(Ljavacard/framework/APDU;[B)V 8 {
+			.stack 5;
+			.locals 2;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 6;		// javacard/framework/APDU.getBuffer()[B
+					astore_3;
+					aload_2;
+					sconst_0;
+					aload_3;
+					sconst_0;
+					aload_2;
+					arraylength;
+					invokestatic 9;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					aload_1;
+					invokevirtual 10;		// javacard/framework/APDU.setOutgoing()S
+					sstore 4;
+					aload_1;
+					sload 4;
+					invokevirtual 11;		// javacard/framework/APDU.setOutgoingLength(S)V
+					aload_1;
+					sconst_0;
+					sload 4;
+					invokevirtual 12;		// javacard/framework/APDU.sendBytes(SS)V
+					return;
+		}
+
+	}
+
+}

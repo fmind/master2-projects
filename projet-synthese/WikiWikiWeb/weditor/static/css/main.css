@@ -1,0 +1,407 @@
+@charset "utf-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.ui-page {
+    background: #FAFAFA;
+}
+
+/* ** ** Common Addative Classes ** ** */
+
+.left  {float:left;} .center {margin:auto;} .right {float:right;}
+.align_left  {text-align:left;} .align_center {text-align:center;} .align_right {text-align:right;} .align_justify {text-align:justify;}
+.hide  {display:none !important;} .inline {display:inline !important;} .block {display:block !important;}
+.clear {clear:both; display:block; overflow:hidden; visibility:hidden; height:0px;}
+
+/* ** Typography ** */
+
+.important {
+    font-weight: bold;
+}
+
+.limit {
+    width: 50%;
+}
+
+.big {
+    font-size: 40px;
+}
+
+.dark-green {
+    color: #365f4d;
+}
+.light-green {
+    color: #cee7ce;
+}
+.white {
+    color: #FFFFFF;
+}
+
+.message-line {
+    width: 700px;
+    margin: auto;
+    padding: 5px;
+    border-radius: 15px;
+    color: white;
+    text-shadow: none;
+}
+.message-line.success {
+    background-color: green;
+}
+.message-line.warning {
+    background-color: orange;
+}
+.message-line.error {
+    background-color: red;
+}
+
+.searchlist td {
+    padding: 0px 15px;
+}
+.searchlist td.actions {
+    width: 80px;
+}
+
+.errorlist {
+    color: red;
+    font-size: 13px;
+}
+.errorlist li {
+    list-style: none;
+}
+
+/* ** Tables ** */
+
+.csstable {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 45px;
+	width: 480px;
+	text-align: left;
+	border-collapse: collapse;
+    border-radius: 15px;
+}
+.csstable thead th.rounded-company {
+	background: #b9c9fe url('../images/table-images/left.png') left -1px no-repeat;
+}
+.csstable thead th.rounded-q4 {
+	background: #b9c9fe url('../images/table-images/right.png') right -1px no-repeat;
+}
+.csstable th {
+	padding: 8px;
+	font-weight: bold;
+	font-size: 13px;
+	color: #FFF;
+	background: #222;
+    text-align: center;
+    text-shadow: none;
+}
+.csstable td {
+	padding: 8px;
+	background: #DDD;
+	border-top: 1px solid #fff;
+	color: #000;
+}
+.csstable tfoot td.rounded-foot-left {
+	background: #e8edff url('../images/table-images/botleft.png') left bottom no-repeat;
+}
+.csstable tfoot td.rounded-foot-right {
+	background: #e8edff url('../images/table-images/botright.png') right bottom no-repeat;
+}
+.csstable tbody tr:hover td {
+	background: #d0dafd;
+}
+.csstable thead tr:first-child th:first-child {border-radius: 15px 0px 0px 0px;}
+.csstable thead tr:first-child th:last-child {border-radius: 0px 15px 0px 0px;}
+.csstable tbody tr:last-child td:first-child {border-radius: 0px 0px 0px 15px;}
+.csstable tbody tr:last-child td:last-child {border-radius: 0px 0px 15px 0px;}
+
+/* ** Form ** */
+
+form.limit {
+    width: 500px;
+}
+form textarea.ui-input-text {
+    height: auto;
+}
+#create_form .ui-select .ui-btn {
+    height: 40px;
+}
+
+/* ** Custom buttons ** */
+
+.ui-icon-user {
+    background: url("../images/icons/111-user-small.png") no-repeat 0px 2px;
+}
+.ui-icon-disconnect {
+    background: url("../images/icons/63-runner-small.png") no-repeat 4px 2px;
+}
+.ui-icon-see {
+    background: url("../images/icons/12-eye-small.png") no-repeat 1px 3px;
+}
+.ui-icon-edit {
+    background: url("../images/icons/187-pencil-small.png") no-repeat 2px 3px;
+}
+.ui-icon-publish {
+    background: url("../images/icons/56-cloud-small.png") no-repeat 1px 4px;
+}
+.ui-icon-conflict {
+    background: url("../images/icons/60-signpost-small.png") no-repeat 2px 1px;
+}
+.ui-icon-update {
+    background: url("../images/icons/40-inbox-small.png") no-repeat 1px 1px;
+}
+.ui-icon-trash {
+    background: url("../images/icons/100-coffee-small.png") no-repeat 1px 1px;
+}
+
+
+/* ** Common colors ** */
+
+.ui-page .red {
+    color: red;
+    text-shadow: none;
+}
+.ui-page .orange {
+    color: orange;
+    text-shadow: none;
+}
+.ui-page .purple {
+    color: purple;
+    text-shadow: none;
+}
+.ui-page .green {
+    color: green;
+    text-shadow: none;
+}
+
+/* ** ** Toolbars ** ** */
+/* ** Header ** */
+
+#logo {
+    top: 14px;
+    left: 20px;
+}
+
+header h1 {
+    padding-top: 15px;
+}
+header h1 a {
+    font-size: 50px;
+    text-decoration: none;
+    text-shadow: 1px 1px #000000;
+}
+
+header h2 {
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+
+header #identity {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    height: 75px;
+    padding: 10px;
+    border: solid #000000 1px;
+    border-radius: 15px;
+}
+
+/* User is log in */
+header #identity .userpic {
+    margin-left: 15px;
+}
+header #identity .actions {
+    text-align: center;
+}
+header #identity .actions .ui-icon-gear {
+    background-color: rgba(0, 0, 255, 0.4);
+}
+header #identity .actions .ui-icon-user {
+    background-color: rgba(0, 255, 0, 0.4);
+}
+header #identity .actions .ui-icon-disconnect {
+    background-color: rgba(255, 0, 0, 0.4);
+}
+
+/* User is log out */
+header #identity #login_form label {
+    display: none;
+}
+header #identity #login_form .credentials {
+    float: left;
+    width: 180px;
+}
+header #identity #login_form .submit {
+    float: right;
+    width: 50px;
+}
+header #identity #login_form .ui-submit {
+    height: 70px;
+    background: url("../images/icons/right-arrow.png") center no-repeat;
+    border: none;
+}
+
+/* ** Content ** */
+
+#content {
+    min-height: 400px;
+    width: 1070px;
+    padding: 15px 30px;
+    margin: 10px auto;
+    background: linear-gradient(rgb(249, 249, 249), rgb(238, 238, 238)) repeat scroll 0% 0% rgb(249, 249, 249);
+    border: solid black 1px;
+    border-radius: 15px;
+}
+
+.ui-grid-a .ui-btn.ui-block-a, .ui-grid-a .ui-btn.ui-block-b {
+    width: 49%;
+}
+
+#cke_1_top {
+    margin: 0px 290px !important;
+}
+
+/* ** Footer ** */
+
+footer.ui-footer-fixed {
+    padding: 15px 0px !important;
+}
+
+/* ** ** Pages ** ** */
+/* ** Article list ** */
+#article_table {
+    display: inline;
+    margin: 0px 20px;
+    text-align: center;
+}
+#article_table th.article_title {
+    width: 170px;
+}
+#article_table th.last_updated, #article_table th.last_modified, #article_table th.last_published {
+    width: 130px;
+}
+#article_table th.wiki_name {
+    width: 100px;
+}
+#article_table th.state {
+    width: 150px;
+}
+
+/* ** Search ** */
+
+#search_form {
+    margin: 0px 50px;
+}
+#search_form .ui-mini {
+    float: left;
+}
+
+#search_form .ui-input-search {
+    width: 625px;
+}
+
+#search_form .ui-select .ui-btn {
+    width: 150px;
+}
+
+#search_form .ui-submit {
+    width: 100px;
+}
+
+/* ** Subscribe ** */
+
+#subscribe {
+    width: 400px;
+    float: right;
+}
+
+#subscribe a {
+    display: inline-block;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    border-image: none;
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    padding: 9px 14px;
+    line-height: normal;
+    border-radius: 5px 5px 5px 5px;
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    margin: 20px auto;
+    font-size: 22px;
+    text-decoration: none;
+}
+
+
+#subscribe a.old-school {
+    background-color: green;
+}
+
+#subscribe a.login {
+    background-color: red;
+}
+
+#subscribe a.google {
+    background-color: blue;
+}
+#subscribe a.yahoo {
+    background-color: purple;
+}
+
+#subscribe .or {
+    border-radius: 200px 200px 200px 200px;
+    background: url("http://sv.sens.sc/img/tiles/gray-dark.png?201305271825") repeat scroll 0px 0px rgb(222, 222, 222);
+    text-align: center;
+    padding: 10px 5px 0px;
+    font-weight: bold;
+    color: rgb(51, 51, 51);
+    font-size: 14px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+}
+
+/** * Edit article ** */
+
+#wiki {
+    height: 300px;
+    width: 550px;
+}
+
+.ui-block-b.diff {
+    width: 45%;
+    margin-left: 50px;
+}
+#diff_conflict {
+    width: 480px;
+    height: 330px;
+}
+
+.history .version-list .version-id {
+    padding-right: 30px;
+}
+.history .version-list .actions {
+    padding-left: 30px;
+}
+.history .version-list .selected {
+    color: green;
+}
+.history .ui-grid-a {
+    height: 300px;
+}
+
+.history .version-container {
+    display: none;
+}
+.history .version-text {
+    height: 280px;
+}
+
+/* ** ** Animations ** ** */

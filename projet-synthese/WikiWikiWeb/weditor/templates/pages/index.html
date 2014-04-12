@@ -1,0 +1,33 @@
+{% extends 'layout/main.html' %}
+
+{% block content %}
+<div id="content" class="ui-grid-a">
+    <div id="promo" class="ui-block-a align_center">
+        <img src="{{ STATIC_URL }}images/wikipedia.png" alt="Logo Wikipédia" height="300" />
+
+        <br /><br />
+
+        <p>
+            <strong>WikiWikiWeb</strong> vous offre une interface simple et réactive, <br/>pour éditer les pages de n'importe quel wiki.
+            <br /><br />
+            Rejoignez une communauté vibrante avec un outil fait pour vous !
+        </p>
+    </div>
+
+    <div id="subscribe" class="ui-block-b align_center">
+        <a href="{% url 'subscribe' %}" class="old-school">Inscription old-school »</a>
+
+        <br /><br />
+
+        <p class="or">
+            OU
+        </p>
+
+        <br /><br />
+
+        <a href="{% url 'login' %}" class="login">Connexion old-school »</a>
+        <a href="/login/yahoo/" class="yahoo">Connexion avec Yahoo »</a>
+        <a href="/login/google" class="google">Connexion avec Google »</a>
+    </div>
+</div>
+{% endblock %}

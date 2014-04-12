@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>WikiWikiWeb - {% block title %}Mon Wiki facile d'accès{% endblock %}</title>
+    <meta charset="utf-8">
+    {% include 'layout/_include.html' %}
+    {% block head_extras %}{% endblock %}
+</head>
+<body>
+    <section data-role="page">
+        <header data-role="header" data-id="header">
+            <a href="{% url 'index' %}" id="logo" data-ajax="false" title="Retour à la page d'accueil">
+                <img src="{{ STATIC_URL }}images/logo.png" alt="Logo de WikiWikiWeb" width="75" height="75" />
+            </a>
+
+            <div class="align_center">
+                <h1><a href="{% url 'index' %}" data-ajax="false"><span class="dark-green">Wiki</span><span class="light-green">Wiki</span><span class="white">Web</span></a></h1>
+                <h2>Mon Wiki facile d'accès</h2>
+            </div>
+
+            {% block identity %}
+                {% if user.is_authenticated %}
+                <div id="identity" class="right ui-btn-up-a">
+                    <div class="infos left">
+                        <div class="title align_center">{{ user.username|capfirst }}</div>
+                        <br />
+                        <div class="actions">
+                            <a href="{% url 'profile' %}" data-role="button" data-icon="user" data-iconpos="notext" data-mini="true" data-inline="true" title="Modifier mes informations de compte"></a>
+                            <a href="{% url 'settings' %}" data-role="button" data-icon="gear" data-iconpos="notext" data-mini="true" data-inline="true" title="Modifier mes configurations"></a>
+                            <a href="{% url 'logout' %}" data-role="button" data-icon="disconnect" data-iconpos="notext" data-mini="true" data-inline="true" title="Me déconnecter"></a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endblock %}
+        </header>
+
+        {% block content %}{% endblock %}
+
+        <footer data-role="footer" data-id="footer" data-position="fixed">
+            <div class="align_center">
+                Tous droits réservés. &copy;2014
+                <a href="{% url 'index' %}" data-ajax="false">WikiWikiWeb</a>
+            </div>
+        </footer>
+    </section>
+</body>
+</html>

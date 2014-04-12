@@ -1,0 +1,61 @@
+{% extends 'layout/main.html' %}
+
+{% block content %}
+<div id="content" class="align_center">
+    {% if messages %}
+        {% for message in messages %}
+        <p class="dark-green important big">
+            {{ message }}
+        </p>
+
+        <br />
+
+        <div class="ui-grid-a">
+            <a href="{% url 'home' %}" class="ui-block-a" data-role="button" data-icon="home" data-iconpos="top">Retour à la page d'accueil</a>
+            <a href="{% url 'profile' %}" class="ui-block-b" data-role="button" data-icon="user" data-iconpos="top">Modifier de nouveau mon profil</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h3>Gestion de mon profil</h3>
+        <br />
+
+        <form action="{% url 'profile' %}" method="post" id="profile_form" class="center limit">
+            {% csrf_token %}
+
+            <div>
+                <label for="id_old_password">{{ profile_form.old_password.label }}:</label>
+                {{ profile_form.old_password }}
+                {{ profile_form.old_password.errors }}
+            </div>
+
+            <br />
+
+            <div>
+                <label for="id_new_password1">{{ profile_form.new_password1.label }}:</label>
+                {{ profile_form.new_password1 }}
+                {{ profile_form.new_password1.errors }}
+            </div>
+
+            <br />
+
+            <div>
+                <label for="id_new_password2">{{ profile_form.new_password2.label }}:</label>
+                {{ profile_form.new_password2 }}
+                {{ profile_form.new_password2.errors }}
+            </div>
+
+            {% if profile_form.non_field_errors %}
+                <br />
+                {{ profile_form.non_field_errors }}
+                <br />
+            {% else %}
+                <br /><br />
+            {% endif %}
+
+            <br />
+
+            <input type="submit" value="Mettre à jour mes informations" />
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
